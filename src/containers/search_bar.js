@@ -1,7 +1,11 @@
 import {Button, ControlLabel, Form, FormGroup, FormControl} from 'react-bootstrap';
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
-export default class SearchBar extends Component {
+import {fetchWeather} from '../actions/index';
+
+class SearchBar extends Component {
   constructor(props) {
     super(props);
 
@@ -9,6 +13,7 @@ export default class SearchBar extends Component {
 
     // Overwrite the local method with explicit binding to SearchBar
     this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   // Event object passed is from vanilla JavaScript DOM handlers: onclick, onhover, onscroll, onchange...
@@ -19,6 +24,11 @@ export default class SearchBar extends Component {
 
   onFormSubmit(event) {
     event.preventDefault();
+
+    // Go and fetch weather data
+    this.props.fetchWeather(this.state.term);
+    // Then clear search input
+    this.setState({term: ''});
   }
 
   render() {
@@ -39,3 +49,11 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({fetchWeather}, dispatch);
+}
+
+// No state needed here--no mapStateToProps to pass in--so "null" passed instead
+// Now there is access to the action creator as this.props.fetchWeather
+export default connect(null, mapDispatchToProps)(SearchBar);
