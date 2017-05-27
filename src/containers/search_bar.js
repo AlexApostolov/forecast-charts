@@ -18,7 +18,6 @@ class SearchBar extends Component {
 
   // Event object passed is from vanilla JavaScript DOM handlers: onclick, onhover, onscroll, onchange...
   onInputChange(event) {
-    console.log(event.target.value);
     this.setState({term: event.target.value});
   }
 
@@ -30,6 +29,12 @@ class SearchBar extends Component {
     // Then clear search input
     this.setState({term: ''});
   }
+
+  componentDidMount() {
+   // Fetch weather for default city
+   const cities = ['Miami'];
+   cities.map((city) => this.props.fetchWeather(city));
+}
 
   render() {
     return (
