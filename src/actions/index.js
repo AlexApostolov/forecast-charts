@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {OWM_KEY} from '../config';
-let ROOT_URL = `http://api.openweathermap.org/data/2.5/forecast?appid=${OWM_KEY}`;
+let ROOT_URL = `http://api.openweathermap.org/data/2.5/forecast?appid=${OWM_KEY}&units=metric`;
 
 export const FETCH_WEATHER = 'FETCH_WEATHER';
 
